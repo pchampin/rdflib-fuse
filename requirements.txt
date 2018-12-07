@@ -1,0 +1,8 @@
+rdflib
+fuse-python
+# also requires 'apt install libfuse-dev'
+## in python3 only
+# bsddb3
+# also requires 'apt install libdb-dev'
+## /!\ Sleepycat stores created with Python2
+## are not correctly parsed in Python3 (and reversely)
