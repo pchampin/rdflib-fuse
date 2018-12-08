@@ -17,14 +17,13 @@ It is usable with
 - ☐ remove a graph by deleting the corresponding file
 - ☐ creating a new graph in an existing directory
 - ☐ creating new directories to create graphs with arbitrary graph names
-- ☐ use Python 3 instead of Python 2
 
 
 ## Install
 
 You will need:
 
-* Python 2.7 (Python 3 should be supported in the future);
+* Python (2 or 3);
 * `libfuse`, including development files
 (`apt-get install libfuse-dev` in Debian-based distributions);
 * the dependencies in `requiperemnts.txt` (`pip install -r requirements.txt`).

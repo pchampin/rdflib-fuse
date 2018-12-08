@@ -115,7 +115,7 @@ class RdfFS(fuse.Fuse):
         content = self._open.get(path)
         if content is None:
             return -errno.ENOENT
-        return content[offset:offset+size]
+        return as_str(content[offset:offset+size])
 
     # protected methods
 
@@ -140,6 +140,9 @@ class RdfFS(fuse.Fuse):
         )
 
     def _get_content(self, path):
+        """
+        Return the RDF content of path, as bytes.
+        """
         #print("===", "_get_content", path)
         g = self._get_graph(path)
         # ugly hack to prevent spurious namespaces in Turtle serializer:
@@ -160,8 +163,8 @@ def make_root(store):
     root = make_rec_dict()
     for ctx in store.contexts():
         #print("===", ctx.identifier, len(ctx))
-        path = ctx.identifier.split('/')
-        path = [ x.encode('utf8') or '%' for x in path ]
+        path = as_str(ctx.identifier).split('/')
+        path = [ x or '%' for x in path ]
         cwd = root
         for i in path[:-1]:
             cwd = cwd[i]
@@ -173,6 +176,17 @@ def make_rec_dict():
 
 LEAF = object()
 
+if sys.version_info[0] < 3:
+    def as_str(x):
+        if isinstance(x, unicode):
+            x = x.encode('utf-8')
+        return x
+
+else:
+    def as_str(x):
+        if isinstance(x, bytes):
+            x = x.decode('utf-8')
+        return x
 
 
 def main():
